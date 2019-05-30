@@ -16,7 +16,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/log",
+      "launchUrl": "api/nlog",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

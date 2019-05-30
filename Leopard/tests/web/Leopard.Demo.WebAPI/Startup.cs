@@ -1,19 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using log4net;
-using log4net.Config;
-using log4net.Repository;
+﻿using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+
+using log4net;
+using log4net.Config;
+using log4net.Repository;
+
+using NLog.Extensions.Logging;
+using NLog.Web;
 
 namespace Leopard.Demo.WebAPI
 {
@@ -25,8 +24,11 @@ namespace Leopard.Demo.WebAPI
         {
             Configuration = configuration;
 
-            repository = LogManager.CreateRepository(Guid.NewGuid().ToString());
+            // log4net
+            repository = LogManager.CreateRepository("FileErrorLogger");
             XmlConfigurator.Configure(repository, new FileInfo("log4net.config"));
+
+
         }
 
         public IConfiguration Configuration { get; }
@@ -38,10 +40,17 @@ namespace Leopard.Demo.WebAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            // 默认加载 log4net.config 配置文件的 root 节点
+            // loggerFactory.AddLog4Net();
+
+            // nlog
+            loggerFactory.AddNLog();
+            env.ConfigureNLog("Nlog.config");
+            
             if (env.IsDevelopment())
-            {
+            {                
                 app.UseDeveloperExceptionPage();
             }
             else
@@ -51,7 +60,7 @@ namespace Leopard.Demo.WebAPI
             }
 
             //app.UseHttpsRedirection();
-            
+
             app.UseMvc();
         }
     }

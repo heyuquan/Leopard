@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
 
-namespace Microsoft.AspNetCore.Http
+namespace Leopard.AspNetCore.Extensions
 {
     /// <summary>
     /// Session扩展

@@ -27,7 +27,7 @@ namespace Leopard.Demo.WebAPI.Controllers
     //  <appender-ref ref="ErrorLoging"/>
     //</logger>
 
-    [Route("api/[controller]")]
+    [Route("api/log4net")]
     [ApiController]
     public class Log4NetController : ControllerBase
     {
@@ -43,9 +43,10 @@ namespace Leopard.Demo.WebAPI.Controllers
         {
             this.logger = logger;
             repositoryLogger = Startup.repository.GetLogger("FileErrorLogger");
-            logManagerLogger = LogManager.GetLogger("FileErrorLogger", typeof(Log4NetController));
+            logManagerLogger = LogManager.GetLogger(Startup.repository.Name, typeof(Log4NetController));
         }
 
+        [Route("logger")]
         // GET api/values
         [HttpGet]
         public ActionResult<string> Get()
@@ -57,10 +58,11 @@ namespace Leopard.Demo.WebAPI.Controllers
             this.logger.LogInformation("info信息");
             this.logger.LogCritical("Critical信息");
 
-            return "welcome to LogController";
+            return "welcome to Log4NetController";
         }
 
         // GET api/values
+        [Route("managerlogger")]
         [HttpGet]
         public ActionResult<string> GetLogManagerLogger()
         {
@@ -70,10 +72,11 @@ namespace Leopard.Demo.WebAPI.Controllers
             this.logManagerLogger.Info("info信息");
             this.logManagerLogger.Fatal("Critical信息");
 
-            return "welcome to LogController";
+            return "welcome to Log4NetController";
         }
 
         // GET api/values
+        [Route("repositorylogger")]
         [HttpGet]
         public ActionResult<string> GetRepositoryLogger()
         {
@@ -83,7 +86,7 @@ namespace Leopard.Demo.WebAPI.Controllers
             this.repositoryLogger.Log(typeof(Log4NetController), log4net.Core.Level.Info, "info信息", null);
             this.repositoryLogger.Log(typeof(Log4NetController), log4net.Core.Level.Fatal, "Critical信息", null);
 
-            return "welcome to LogController";
+            return "welcome to Log4NetController";
         }
 
     }
