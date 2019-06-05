@@ -1,5 +1,5 @@
 ﻿using System;
-using System.ComponentModel;
+using System.Linq;
 using System.Reflection;
 
 namespace Leopard.Extensions
@@ -17,14 +17,8 @@ namespace Leopard.Extensions
         public static string GetDescription(this Enum enumeration)
         {
             Type type = enumeration.GetType();
-            MemberInfo[] memInfo = type.GetMember(enumeration.ToString());
-            if (null != memInfo && memInfo.Length > 0)
-            {
-                object[] attrs = memInfo[0].GetCustomAttributes(typeof(DescriptionAttribute), false);
-                if (null != attrs && attrs.Length > 0)
-                    return ((DescriptionAttribute)attrs[0]).Description;
-            }
-            return enumeration.ToString();
+            MemberInfo member = type.GetMember(enumeration.ToString()).FirstOrDefault();
+            return member != null ? member.GetDescription() : enumeration.ToString();
         }
     }
 }

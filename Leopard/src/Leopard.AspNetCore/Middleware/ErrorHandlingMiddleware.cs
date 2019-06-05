@@ -1,4 +1,5 @@
 ﻿using Leopard.AspNetCore.Extensions;
+using Leopard.Domain.Request;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -70,12 +71,15 @@ namespace Leopard.AspNetCore.Middleware
             }
 
             StringBuilder sb = new StringBuilder();
-            sb.AppendFormat("url:{0}", context.Request.GetAbsoluteUri())
+            sb.AppendFormat("RequestId:{0}", context.TraceIdentifier)
+              .AppendFormat("url:{0}", context.Request.GetAbsoluteUri())
               .AppendLine()
               .AppendFormat("statusCode:{0}-{1}", statusCode.ToString(), info);
             this.logger.LogError(ex, sb.ToString());
 
-            var result = JsonConvert.SerializeObject(new { error = ex.Message });
+            var result = JsonConvert.SerializeObject(
+                new Response { RequestId = context.TraceIdentifier, ErrorMessage = "抱歉，出错了。请联系管理员。" }
+                );
             context.Response.ContentType = "application/json;charset=utf-8";
             // context.Response.StatusCode = (int)code;
             return context.Response.WriteAsync(result);

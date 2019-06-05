@@ -1,4 +1,4 @@
-﻿namespace Leopard.Domain.Result
+﻿namespace Leopard.Domain.Request
 {
     /// <summary>
     /// 登录实体接口

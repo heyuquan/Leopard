@@ -1,4 +1,4 @@
-﻿namespace Leopard.Domain.Result
+﻿namespace Leopard.Domain.Request
 {
     /// <summary>
     /// 操作结果类接口
@@ -71,7 +71,7 @@
         /// <summary>
         /// 权限不足
         /// </summary>
-        PurviewLack,
+        NoPermission,
 
         /// <summary>
         /// 非法操作
