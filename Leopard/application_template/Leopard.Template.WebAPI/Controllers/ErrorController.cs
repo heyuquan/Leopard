@@ -8,9 +8,13 @@ namespace Leopard.Template.WebAPI.Controllers
 {
     [Route("api/error")]
     [ApiController]
-    public class ErrorController
+    public class ErrorController : ControllerBase
     {
         // GET api/values
+        /// <summary>
+        /// 触发 Startup 全局异常捕获机制
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult<string> Get()
         {

@@ -26,6 +26,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution_items", "solution_
 		solution_items\StyleCop.ruleset = solution_items\StyleCop.ruleset
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leopard.Template.MVC", "application_template\Leopard.Template.MVC\Leopard.Template.MVC.csproj", "{212908F2-7229-4A41-AD36-BA48BB3F8340}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,6 +54,10 @@ Global
 		{F051E1DC-3C9C-4D89-A654-B490A1DFD4D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F051E1DC-3C9C-4D89-A654-B490A1DFD4D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F051E1DC-3C9C-4D89-A654-B490A1DFD4D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{212908F2-7229-4A41-AD36-BA48BB3F8340}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{212908F2-7229-4A41-AD36-BA48BB3F8340}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{212908F2-7229-4A41-AD36-BA48BB3F8340}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{212908F2-7229-4A41-AD36-BA48BB3F8340}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +68,7 @@ Global
 		{8DF2E0BE-B724-4054-B7A8-63AE1B310E29} = {F6FE0816-826E-4D08-A9C4-B9D3BAD3A320}
 		{EA60DD3B-6463-4717-A840-2D39C662D19D} = {F6FE0816-826E-4D08-A9C4-B9D3BAD3A320}
 		{F051E1DC-3C9C-4D89-A654-B490A1DFD4D9} = {DF700A6A-5EFA-420B-A922-70F4001609BF}
+		{212908F2-7229-4A41-AD36-BA48BB3F8340} = {DF700A6A-5EFA-420B-A922-70F4001609BF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1957D577-9027-43F5-8368-09B072CA57FC}

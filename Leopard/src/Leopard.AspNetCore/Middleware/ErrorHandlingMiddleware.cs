@@ -1,6 +1,7 @@
 ﻿using Leopard.AspNetCore.Extensions;
 using Leopard.Domain.Request;
-using Microsoft.AspNetCore.Builder;
+using Leopard.Extensions;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -18,11 +19,15 @@ namespace Leopard.AspNetCore.Middleware
     {
         private readonly RequestDelegate next;
         private readonly ILogger<ErrorHandlingMiddleware> logger;
+        private readonly IHostingEnvironment env;
 
-        public ErrorHandlingMiddleware(RequestDelegate next, ILogger<ErrorHandlingMiddleware> logger)
+        public ErrorHandlingMiddleware(RequestDelegate next
+            , ILogger<ErrorHandlingMiddleware> logger
+            , IHostingEnvironment env)
         {
             this.next = next;
             this.logger = logger;
+            this.env = env;
         }
 
         public async Task InvokeAsync(HttpContext context)
@@ -45,7 +50,7 @@ namespace Leopard.AspNetCore.Middleware
 
         private Task HandleExceptionAsync(HttpContext context, Exception ex)
         {
-            // var code = HttpStatusCode.InternalServerError; // 500 if unexpected
+            var code = HttpStatusCode.InternalServerError; // 500 if unexpected
             var statusCode = context.Response.StatusCode;
             var info = string.Empty;
             switch (statusCode)
@@ -66,22 +71,37 @@ namespace Leopard.AspNetCore.Middleware
                     info = "请求错误";
                     break;
                 default:
-                    info = "内部错误";
+                    {
+                        statusCode = 500;
+                        info = "内部错误";
+                    }
                     break;
             }
 
             StringBuilder sb = new StringBuilder();
-            sb.AppendFormat("RequestId:{0}", context.TraceIdentifier)
-              .AppendFormat("url:{0}", context.Request.GetAbsoluteUri())
+            sb.AppendFormat($"url:{context.Request.GetAbsoluteUri()}  statusCode:{statusCode.ToString()}-{info}")
               .AppendLine()
-              .AppendFormat("statusCode:{0}-{1}", statusCode.ToString(), info);
-            this.logger.LogError(ex, sb.ToString());
+              .Append(ex.ToStrMessage());
+            string message = sb.ToString();
+            sb.Clear();
+            this.logger.LogError(message);
 
-            var result = JsonConvert.SerializeObject(
-                new Response { RequestId = context.TraceIdentifier, ErrorMessage = "抱歉，出错了。请联系管理员。" }
+            string result = string.Empty;
+            if (env.IsDevelopment())
+            {
+                result = JsonConvert.SerializeObject(
+                    new Response { RequestId = context.TraceIdentifier, ErrorMessage = message }
                 );
+            }
+            else
+            {
+                result = JsonConvert.SerializeObject(
+                    new Response { RequestId = context.TraceIdentifier, ErrorMessage = "抱歉，出错了。请联系管理员。" }
+                );
+            }
+
             context.Response.ContentType = "application/json;charset=utf-8";
-            // context.Response.StatusCode = (int)code;
+            context.Response.StatusCode = (int)code;
             return context.Response.WriteAsync(result);
         }
     }
