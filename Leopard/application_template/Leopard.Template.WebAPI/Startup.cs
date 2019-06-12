@@ -82,10 +82,10 @@ namespace Leopard.Template.WebAPI
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             app.UseErrorHandlingMiddleware();
-            // nlog
+            // nlog            
             loggerFactory.AddNLog();
             env.ConfigureNLog("Nlog.config");
-
+            
             if (env.IsDevelopment())
             {
                 //app.UseDeveloperExceptionPage();

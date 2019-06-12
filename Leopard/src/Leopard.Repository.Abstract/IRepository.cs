@@ -5,7 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Leopard.Domain.Repositories
+namespace Leopard.Repository.Abstract
 {
     /// <summary>
     /// 仓储接口
