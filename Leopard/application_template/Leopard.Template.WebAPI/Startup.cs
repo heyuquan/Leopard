@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Leopard.AspNetCore.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +11,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+
+using Leopard.Configuration;
+using Leopard.AspNetCore.Middleware;
+using Leopard.Template.WebAPI.Config;
 
 using NLog.Extensions.Logging;
 using NLog.Web;
@@ -27,6 +30,7 @@ namespace Leopard.Template.WebAPI
         {
             this.Env = env;
             this.Configuration = configuration;
+            this.Configuration.AddConfigurationGeterLocator();
         }
 
         public IHostingEnvironment Env { get; }
@@ -37,6 +41,7 @@ namespace Leopard.Template.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddIConfigurationGeter().AddConfigFinder();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             if (Env.IsDevelopment())
@@ -71,6 +76,8 @@ namespace Leopard.Template.WebAPI
                 });
             }
 
+            services.Configure<MySetting>(this.Configuration.GetSection("MySetting"));
+            
             services.AddRouting(options =>
             {
                 // 将 URL 地址转换成小写  （设置后，swagger/html.index页面展现的api会全部是小写的）
@@ -85,7 +92,7 @@ namespace Leopard.Template.WebAPI
             // nlog            
             loggerFactory.AddNLog();
             env.ConfigureNLog("Nlog.config");
-            
+
             if (env.IsDevelopment())
             {
                 //app.UseDeveloperExceptionPage();
