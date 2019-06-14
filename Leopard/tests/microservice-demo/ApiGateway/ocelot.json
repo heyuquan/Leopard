@@ -1,0 +1,31 @@
+{
+  "ReRoutes": [
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "UpstreamPathTemplate": "/ServiceA/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ],
+      "ServiceName": "ServiceA",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "UpstreamPathTemplate": "/ServiceB/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ],
+      "ServiceName": "ServiceB",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      }
+    }
+  ],
+  "GlobalConfiguration": {
+    "ServiceDiscoveryProvider": {
+      "Host": "localhost",
+      "Port": 8500,
+      "Type": "Consul"
+    }
+  }
+}
