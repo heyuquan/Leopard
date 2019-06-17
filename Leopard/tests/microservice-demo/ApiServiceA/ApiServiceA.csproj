@@ -13,4 +13,9 @@
     <PackageReference Include="IdentityModel" Version="3.10.10" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Leopard.Consul\Leopard.Consul.csproj" />
+    <ProjectReference Include="..\..\..\src\Leopard\Leopard.csproj" />
+  </ItemGroup>
+
 </Project>

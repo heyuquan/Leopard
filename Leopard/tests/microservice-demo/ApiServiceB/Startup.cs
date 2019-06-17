@@ -6,11 +6,14 @@ using Consul;
 using Leopard;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Hosting.Server.Features;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System.Runtime.Serialization;
 
 namespace ApiServiceB
 {
@@ -40,11 +43,11 @@ namespace ApiServiceB
             app.UseMvc();
 
             String ip = "localhost";
-            int port = 50440;
+            int port = 30440;
             var client = new ConsulClient(ConfigurationOverview);       //回调获取
             string serviceId = "ServerNameFirst" + Guid.NewGuid();
 
-            var result = client.Agent.ServiceRegister(
+            client.Agent.ServiceRegister(
                 new AgentServiceRegistration()
                 {
                     ID = serviceId,          //服务编号保证不重复
@@ -53,14 +56,14 @@ namespace ApiServiceB
                     Port = port,             //服务端口
                     Check = new AgentServiceCheck
                     {
-                        DeregisterCriticalServiceAfter = CacheTimeSpan.DefaultCacheTime,    //服务启动多久后反注册
-                        Interval = CacheTimeSpan.DefaultCacheTime,      //健康检查时间间隔，或者称为心跳间隔（定时检查服务是否健康）
+                        DeregisterCriticalServiceAfter = CacheTimeSpan.ShortTime,    //服务启动多久后反注册
+                        Interval = CacheTimeSpan.ShortTime,      //健康检查时间间隔，或者称为心跳间隔（定时检查服务是否健康）
                         HTTP = $"http://{ip}:{port}/api/health",         //健康检查地址
-                        Timeout = CacheTimeSpan.DefaultCacheTime
+                        Timeout = CacheTimeSpan.ShortTime
                     }
-                });
+                }).GetAwaiter().GetResult();
 
-            lifetime.ApplicationStopping.Register(
+            lifetime.ApplicationStopped.Register(
                 () =>
                 {
                     client.Agent.ServiceDeregister(serviceId).Wait();

@@ -12,7 +12,7 @@ namespace ApiServiceB.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok("success");
+            return Ok("OK");
         }
     }
 }

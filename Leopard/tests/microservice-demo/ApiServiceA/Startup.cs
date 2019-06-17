@@ -23,8 +23,9 @@ namespace ApiServiceA
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
+        {            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddServiceDiscovery();
 
             services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", options =>
@@ -32,7 +33,7 @@ namespace ApiServiceA
                     options.Authority = "http://127.0.0.1:8021";
                     options.RequireHttpsMetadata = false;
                     options.Audience = "ApiServiceA";
-                });
+                });            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +46,9 @@ namespace ApiServiceA
 
             app.UseAuthentication();
             app.UseMvc();
+
+            // Autoregister using server.Features (does not work in reverse proxy mode)
+            app.UseConsulRegisterService();
         }
     }
 }

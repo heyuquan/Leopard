@@ -6,7 +6,7 @@ using Consul;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ApiServiceB.Controllers
+namespace ApiServiceA.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

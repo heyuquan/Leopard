@@ -46,6 +46,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{EE
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "web", "web", "{DDD040AA-167A-45D7-8B6A-51A135D4E53C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leopard.Consul", "src\Leopard.Consul\Leopard.Consul.csproj", "{45888258-A475-472A-AAFD-F6526CAA0603}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -96,6 +98,10 @@ Global
 		{19EC078A-4C2F-4498-88C9-EC833FFF1E54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19EC078A-4C2F-4498-88C9-EC833FFF1E54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19EC078A-4C2F-4498-88C9-EC833FFF1E54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45888258-A475-472A-AAFD-F6526CAA0603}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45888258-A475-472A-AAFD-F6526CAA0603}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45888258-A475-472A-AAFD-F6526CAA0603}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45888258-A475-472A-AAFD-F6526CAA0603}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -116,6 +122,7 @@ Global
 		{19EC078A-4C2F-4498-88C9-EC833FFF1E54} = {EE2B3139-F336-4519-B350-96C51AAA3F4E}
 		{EE2B3139-F336-4519-B350-96C51AAA3F4E} = {DF430805-3616-4AFD-A8A8-D4DC45E997CC}
 		{DDD040AA-167A-45D7-8B6A-51A135D4E53C} = {DF430805-3616-4AFD-A8A8-D4DC45E997CC}
+		{45888258-A475-472A-AAFD-F6526CAA0603} = {F6FE0816-826E-4D08-A9C4-B9D3BAD3A320}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1957D577-9027-43F5-8368-09B072CA57FC}
