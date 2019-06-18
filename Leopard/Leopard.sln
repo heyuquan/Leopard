@@ -34,19 +34,33 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{E9F6DDF3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "web", "web", "{D19DBAC7-E267-4388-97A1-18C543D93083}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer", "tests\microservice-demo\IdentityServer\IdentityServer.csproj", "{4A77037D-7032-4D94-B327-666F1FE8754D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "tests\microservice-demo\IdentityServer\IdentityServer.csproj", "{4A77037D-7032-4D94-B327-666F1FE8754D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway", "tests\microservice-demo\ApiGateway\ApiGateway.csproj", "{43D0FD2B-54D7-45B9-9622-E71C44E12616}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiGateway", "tests\microservice-demo\ApiGateway\ApiGateway.csproj", "{43D0FD2B-54D7-45B9-9622-E71C44E12616}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiServiceA", "tests\microservice-demo\ApiServiceA\ApiServiceA.csproj", "{89EB384A-89CD-4312-9110-221F802F31C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiServiceA", "tests\microservice-demo\ApiServiceA\ApiServiceA.csproj", "{89EB384A-89CD-4312-9110-221F802F31C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiServiceB", "tests\microservice-demo\ApiServiceB\ApiServiceB.csproj", "{19EC078A-4C2F-4498-88C9-EC833FFF1E54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiServiceB", "tests\microservice-demo\ApiServiceB\ApiServiceB.csproj", "{19EC078A-4C2F-4498-88C9-EC833FFF1E54}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{EE2B3139-F336-4519-B350-96C51AAA3F4E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "web", "web", "{DDD040AA-167A-45D7-8B6A-51A135D4E53C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leopard.Consul", "src\Leopard.Consul\Leopard.Consul.csproj", "{45888258-A475-472A-AAFD-F6526CAA0603}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Leopard.Consul", "src\Leopard.Consul\Leopard.Consul.csproj", "{45888258-A475-472A-AAFD-F6526CAA0603}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leopard.Autofac", "src\Leopard.Autofac\Leopard.Autofac.csproj", "{E626B465-379F-4BA3-BFAD-CE42AE2E0757}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "domain-driven-design", "domain-driven-design", "{E690A1E2-63AA-4F0E-A405-D846B6A4FC00}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leopard.DDD.WebAPI", "tests\domain-driven-design\Leopard.DDD.WebAPI\Leopard.DDD.WebAPI.csproj", "{1E277174-7E8F-41EC-AF24-C05F2B601A1B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leopard.DDD.Application", "tests\domain-driven-design\Leopard.DDD.Application\Leopard.DDD.Application.csproj", "{2AABC438-F4C8-4639-B2A9-A7BE1EFB6D81}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leopard.DDD.Services", "tests\domain-driven-design\Leopard.DDD.Services\Leopard.DDD.Services.csproj", "{A93A0087-B210-465F-A1A6-33B893E2E922}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leopard.DDD.Domain", "tests\domain-driven-design\Leopard.DDD.Domain\Leopard.DDD.Domain.csproj", "{94034D87-FBA6-4C71-AE9A-7839A4B6DC8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leopard.DDD.Repository", "tests\domain-driven-design\Leopard.DDD.Repository\Leopard.DDD.Repository.csproj", "{DF81BD68-F81D-4D0D-B675-500D6B438E1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -102,6 +116,30 @@ Global
 		{45888258-A475-472A-AAFD-F6526CAA0603}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45888258-A475-472A-AAFD-F6526CAA0603}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45888258-A475-472A-AAFD-F6526CAA0603}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E626B465-379F-4BA3-BFAD-CE42AE2E0757}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E626B465-379F-4BA3-BFAD-CE42AE2E0757}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E626B465-379F-4BA3-BFAD-CE42AE2E0757}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E626B465-379F-4BA3-BFAD-CE42AE2E0757}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E277174-7E8F-41EC-AF24-C05F2B601A1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E277174-7E8F-41EC-AF24-C05F2B601A1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E277174-7E8F-41EC-AF24-C05F2B601A1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E277174-7E8F-41EC-AF24-C05F2B601A1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AABC438-F4C8-4639-B2A9-A7BE1EFB6D81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AABC438-F4C8-4639-B2A9-A7BE1EFB6D81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AABC438-F4C8-4639-B2A9-A7BE1EFB6D81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AABC438-F4C8-4639-B2A9-A7BE1EFB6D81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A93A0087-B210-465F-A1A6-33B893E2E922}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A93A0087-B210-465F-A1A6-33B893E2E922}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A93A0087-B210-465F-A1A6-33B893E2E922}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A93A0087-B210-465F-A1A6-33B893E2E922}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94034D87-FBA6-4C71-AE9A-7839A4B6DC8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94034D87-FBA6-4C71-AE9A-7839A4B6DC8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94034D87-FBA6-4C71-AE9A-7839A4B6DC8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94034D87-FBA6-4C71-AE9A-7839A4B6DC8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF81BD68-F81D-4D0D-B675-500D6B438E1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF81BD68-F81D-4D0D-B675-500D6B438E1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF81BD68-F81D-4D0D-B675-500D6B438E1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF81BD68-F81D-4D0D-B675-500D6B438E1A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -123,6 +161,13 @@ Global
 		{EE2B3139-F336-4519-B350-96C51AAA3F4E} = {DF430805-3616-4AFD-A8A8-D4DC45E997CC}
 		{DDD040AA-167A-45D7-8B6A-51A135D4E53C} = {DF430805-3616-4AFD-A8A8-D4DC45E997CC}
 		{45888258-A475-472A-AAFD-F6526CAA0603} = {F6FE0816-826E-4D08-A9C4-B9D3BAD3A320}
+		{E626B465-379F-4BA3-BFAD-CE42AE2E0757} = {F6FE0816-826E-4D08-A9C4-B9D3BAD3A320}
+		{E690A1E2-63AA-4F0E-A405-D846B6A4FC00} = {E9F6DDF3-66F0-4390-A8B3-3BEF769432DB}
+		{1E277174-7E8F-41EC-AF24-C05F2B601A1B} = {E690A1E2-63AA-4F0E-A405-D846B6A4FC00}
+		{2AABC438-F4C8-4639-B2A9-A7BE1EFB6D81} = {E690A1E2-63AA-4F0E-A405-D846B6A4FC00}
+		{A93A0087-B210-465F-A1A6-33B893E2E922} = {E690A1E2-63AA-4F0E-A405-D846B6A4FC00}
+		{94034D87-FBA6-4C71-AE9A-7839A4B6DC8D} = {E690A1E2-63AA-4F0E-A405-D846B6A4FC00}
+		{DF81BD68-F81D-4D0D-B675-500D6B438E1A} = {E690A1E2-63AA-4F0E-A405-D846B6A4FC00}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1957D577-9027-43F5-8368-09B072CA57FC}
