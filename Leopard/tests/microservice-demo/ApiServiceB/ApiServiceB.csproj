@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Leopard.Consul\Leopard.Consul.csproj" />
     <ProjectReference Include="..\..\..\src\Leopard\Leopard.csproj" />
   </ItemGroup>
 

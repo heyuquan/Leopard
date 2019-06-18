@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Text;
+using System.Linq;
 
 namespace Leopard.AspNetCore.Extensions
 {
@@ -12,8 +13,6 @@ namespace Leopard.AspNetCore.Extensions
         /// <summary>
         /// 获取请求的绝对路径地址
         /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
         public static string GetAbsoluteUri(this HttpRequest request)
         {
             return new StringBuilder()
@@ -29,8 +28,6 @@ namespace Leopard.AspNetCore.Extensions
         /// <summary>
         /// 是否是AJAX请求
         /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
         public static bool IsAjaxRequest(this HttpRequest request)
         {
             if (request == null)
@@ -39,6 +36,31 @@ namespace Leopard.AspNetCore.Extensions
             }
             return request.Headers != null &&
                    request.Headers["X-Requested-With"] == "XMLHttpRequest";
+        }
+
+        /// <summary>
+        /// 获取本地IP 地址:端口
+        /// </summary>
+        /// <returns>地址:端口</returns>
+        [Obsolete("验证是否可行")]
+        public static string GetLocalEndpoint(this HttpRequest request)
+        {
+            return request.HttpContext.Connection.LocalIpAddress.MapToIPv4().ToString() + ":" + request.HttpContext.Connection.LocalPort;
+        }
+
+        /// <summary>
+        /// 获取远程IP
+        /// </summary>
+        /// <returns>IP</returns>
+        [Obsolete("验证是否可行")]
+        public static string GetRemoteIp(this HttpRequest request)
+        {
+            var ip = request.Headers["X-Forwarded-For"].FirstOrDefault();
+            if (string.IsNullOrEmpty(ip))
+            {
+                ip = request.HttpContext.Connection.RemoteIpAddress.ToString();
+            }
+            return ip;
         }
     }
 }

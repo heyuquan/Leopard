@@ -1,6 +1,7 @@
 ﻿using Consul;
 using Leopard;
 using Leopard.Consul;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.AspNetCore.Http.Features;
@@ -11,7 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Microsoft.AspNetCore.Builder
+namespace Leopard.Consul.Extensions
 {
     // 方案来源：
     // Consul 动态服务注册（非硬编码ip、端口）

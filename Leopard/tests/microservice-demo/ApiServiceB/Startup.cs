@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Runtime.Serialization;
+using Leopard.Consul.Extensions;
 
 namespace ApiServiceB
 {
@@ -30,6 +31,7 @@ namespace ApiServiceB
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddServiceDiscovery();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,40 +44,9 @@ namespace ApiServiceB
 
             app.UseMvc();
 
-            String ip = "localhost";
-            int port = 30440;
-            var client = new ConsulClient(ConfigurationOverview);       //回调获取
-            string serviceId = "ServerNameFirst" + Guid.NewGuid();
-
-            client.Agent.ServiceRegister(
-                new AgentServiceRegistration()
-                {
-                    ID = serviceId,          //服务编号保证不重复
-                    Name = "ApiServiceB",    //服务的名称
-                    Address = ip,            //服务ip地址
-                    Port = port,             //服务端口
-                    Check = new AgentServiceCheck
-                    {
-                        DeregisterCriticalServiceAfter = CacheTimeSpan.ShortTime,    //服务启动多久后反注册
-                        Interval = CacheTimeSpan.ShortTime,      //健康检查时间间隔，或者称为心跳间隔（定时检查服务是否健康）
-                        HTTP = $"http://{ip}:{port}/api/health",         //健康检查地址
-                        Timeout = CacheTimeSpan.ShortTime
-                    }
-                }).GetAwaiter().GetResult();
-
-            lifetime.ApplicationStopped.Register(
-                () =>
-                {
-                    client.Agent.ServiceDeregister(serviceId).Wait();
-                });
+            // Autoregister using server.Features (does not work in reverse proxy mode)
+            app.UseConsulRegisterService();
         }
 
-        private static void ConfigurationOverview(ConsulClientConfiguration obj)
-        {
-            //consul的地址
-            obj.Address = new Uri("http://127.0.0.1:8500");
-            //数据中心命名
-            obj.Datacenter = "dc1";
-        }
     }
 }

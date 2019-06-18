@@ -2,10 +2,11 @@
 using Leopard;
 using Leopard.Consul;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using System;
 
-namespace Microsoft.Extensions.DependencyInjection
+namespace Leopard.Consul.Extensions
 {
     public static class ServiceExtensions
     {
