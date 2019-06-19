@@ -48,19 +48,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "web", "web", "{DDD040AA-167
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Leopard.Consul", "src\Leopard.Consul\Leopard.Consul.csproj", "{45888258-A475-472A-AAFD-F6526CAA0603}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leopard.Autofac", "src\Leopard.Autofac\Leopard.Autofac.csproj", "{E626B465-379F-4BA3-BFAD-CE42AE2E0757}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Leopard.AspNetCore.Autofac", "src\Leopard.AspNetCore.Autofac\Leopard.AspNetCore.Autofac.csproj", "{E626B465-379F-4BA3-BFAD-CE42AE2E0757}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "domain-driven-design", "domain-driven-design", "{E690A1E2-63AA-4F0E-A405-D846B6A4FC00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leopard.DDD.WebAPI", "tests\domain-driven-design\Leopard.DDD.WebAPI\Leopard.DDD.WebAPI.csproj", "{1E277174-7E8F-41EC-AF24-C05F2B601A1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Leopard.DDD.WebAPI", "tests\domain-driven-design\Leopard.DDD.WebAPI\Leopard.DDD.WebAPI.csproj", "{1E277174-7E8F-41EC-AF24-C05F2B601A1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leopard.DDD.Application", "tests\domain-driven-design\Leopard.DDD.Application\Leopard.DDD.Application.csproj", "{2AABC438-F4C8-4639-B2A9-A7BE1EFB6D81}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Leopard.DDD.Application", "tests\domain-driven-design\Leopard.DDD.Application\Leopard.DDD.Application.csproj", "{2AABC438-F4C8-4639-B2A9-A7BE1EFB6D81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leopard.DDD.Services", "tests\domain-driven-design\Leopard.DDD.Services\Leopard.DDD.Services.csproj", "{A93A0087-B210-465F-A1A6-33B893E2E922}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Leopard.DDD.Domain", "tests\domain-driven-design\Leopard.DDD.Domain\Leopard.DDD.Domain.csproj", "{94034D87-FBA6-4C71-AE9A-7839A4B6DC8D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leopard.DDD.Domain", "tests\domain-driven-design\Leopard.DDD.Domain\Leopard.DDD.Domain.csproj", "{94034D87-FBA6-4C71-AE9A-7839A4B6DC8D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leopard.DDD.Repository", "tests\domain-driven-design\Leopard.DDD.Repository\Leopard.DDD.Repository.csproj", "{DF81BD68-F81D-4D0D-B675-500D6B438E1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Leopard.DDD.Repository", "tests\domain-driven-design\Leopard.DDD.Repository\Leopard.DDD.Repository.csproj", "{DF81BD68-F81D-4D0D-B675-500D6B438E1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -128,10 +126,6 @@ Global
 		{2AABC438-F4C8-4639-B2A9-A7BE1EFB6D81}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AABC438-F4C8-4639-B2A9-A7BE1EFB6D81}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2AABC438-F4C8-4639-B2A9-A7BE1EFB6D81}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A93A0087-B210-465F-A1A6-33B893E2E922}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A93A0087-B210-465F-A1A6-33B893E2E922}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A93A0087-B210-465F-A1A6-33B893E2E922}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A93A0087-B210-465F-A1A6-33B893E2E922}.Release|Any CPU.Build.0 = Release|Any CPU
 		{94034D87-FBA6-4C71-AE9A-7839A4B6DC8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{94034D87-FBA6-4C71-AE9A-7839A4B6DC8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94034D87-FBA6-4C71-AE9A-7839A4B6DC8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -165,7 +159,6 @@ Global
 		{E690A1E2-63AA-4F0E-A405-D846B6A4FC00} = {E9F6DDF3-66F0-4390-A8B3-3BEF769432DB}
 		{1E277174-7E8F-41EC-AF24-C05F2B601A1B} = {E690A1E2-63AA-4F0E-A405-D846B6A4FC00}
 		{2AABC438-F4C8-4639-B2A9-A7BE1EFB6D81} = {E690A1E2-63AA-4F0E-A405-D846B6A4FC00}
-		{A93A0087-B210-465F-A1A6-33B893E2E922} = {E690A1E2-63AA-4F0E-A405-D846B6A4FC00}
 		{94034D87-FBA6-4C71-AE9A-7839A4B6DC8D} = {E690A1E2-63AA-4F0E-A405-D846B6A4FC00}
 		{DF81BD68-F81D-4D0D-B675-500D6B438E1A} = {E690A1E2-63AA-4F0E-A405-D846B6A4FC00}
 	EndGlobalSection

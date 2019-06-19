@@ -9,19 +9,20 @@ using System;
 using System.Reflection;
 using System.Linq;
 using Leopard.Dependency;
+using System.Collections.Generic;
+using Microsoft.Extensions.DependencyModel;
+using System.IO;
+using System.Runtime.Loader;
 
-namespace Leopard.Consul.Extensions
+namespace Leopard.AspNetCore.Autofac.Extensions
 {
     public static class ServiceExtensions
     {
         /// <summary>
-        /// 添加服务注册中心
+        /// 获取 Autofac 的 IServiceProvider
         /// </summary>
-        public static IServiceProvider AddAutofacDependencyServices(this IServiceCollection services)
+        public static IServiceProvider GetAutofacServiceProvider(this IServiceCollection services)
         {
-            // 添加框架自动化依赖接口类
-            services.AddDependencyServices();
-
             // 接管 Controller 注入流程，实现Controller中的属性注入
             services.Replace(ServiceDescriptor.Transient<IControllerActivator, ServiceBasedControllerActivator>());
 
@@ -34,10 +35,14 @@ namespace Leopard.Consul.Extensions
 
             var builder = new ContainerBuilder();
             builder.RegisterType<ApplicationPartManager>().AsSelf().SingleInstance();
-            builder.RegisterTypes(feature.Controllers.Select(ti => ti.AsType()).ToArray()).PropertiesAutowired();
-            builder.Populate(services);
+            builder.RegisterTypes(feature.Controllers.Select(ti => ti.AsType()).ToArray())
+                .PropertiesAutowired();
 
+            DependencyRegister.Custom(builder);
+
+            builder.Populate(services);
             return new AutofacServiceProvider(builder.Build());
         }
+
     }
 }

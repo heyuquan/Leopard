@@ -4,4 +4,8 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Leopard.DDD.Domain\Leopard.DDD.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

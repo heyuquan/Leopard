@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Leopard.Extensions;
@@ -19,12 +20,12 @@ namespace Leopard.Dependency
     /// </summary>
     public class DependencyTypeFinder : IDependencyTypeFinder
     {
-        private readonly Assembly[] assemblies;
+        private readonly IEnumerable<Assembly> assemblies;
 
         /// <summary>
         /// 初始化一个<see cref="DependencyTypeFinder"/>类型的新实例
         /// </summary>
-        public DependencyTypeFinder(Assembly[] assemblies)
+        public DependencyTypeFinder(IEnumerable<Assembly> assemblies)
         {
             this.assemblies = assemblies;
         }
@@ -37,7 +38,7 @@ namespace Leopard.Dependency
             Type[] baseTypes = new[] { typeof(ISingletonDependency), typeof(IScopeDependency), typeof(ITransientDependency) };
             Type[] types = assemblies.SelectMany(assembly => assembly.GetTypes())
                 .Where(type => type.IsClass && !type.IsAbstract && !type.IsInterface && !type.HasAttribute<IgnoreDependencyAttribute>()
-                    && (baseTypes.Any(b => b.IsAssignableFrom(type)) || type.HasAttribute<DependencyAttribute>()))
+                    && baseTypes.Any(b => b.IsAssignableFrom(type)))
                 .ToArray();
             return types;
         }
@@ -45,6 +46,6 @@ namespace Leopard.Dependency
         /// <summary>
         /// 获取构造函数传入的程序集集合
         /// </summary>
-        public Assembly[] GetAssemblies() => this.assemblies;
+        public IEnumerable<Assembly> GetAssemblies() => this.assemblies;
     }
 }
