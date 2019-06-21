@@ -15,7 +15,7 @@ namespace Leopard.Template.WebAPI.Controllers
     {
         private readonly IConfigurationGeter configurationGeter;
         private readonly MySettingDI mySetting;
-
+        
         public ConfigGeterController(MySettingDI mySetting, IConfigurationGeter configurationGeter)
         {
             this.configurationGeter = configurationGeter;

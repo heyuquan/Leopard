@@ -60,6 +60,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Leopard.DDD.Domain", "tests
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Leopard.DDD.Repository", "tests\domain-driven-design\Leopard.DDD.Repository\Leopard.DDD.Repository.csproj", "{DF81BD68-F81D-4D0D-B675-500D6B438E1A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leopard.Redis", "src\Leopard.Redis\Leopard.Redis.csproj", "{DB60D50A-E84D-43F8-A024-DDB481C7818C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leopard.RabbitMQ", "src\Leopard.RabbitMQ\Leopard.RabbitMQ.csproj", "{F198C4DD-1197-4816-B56B-CF64ED711B00}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -134,6 +138,14 @@ Global
 		{DF81BD68-F81D-4D0D-B675-500D6B438E1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF81BD68-F81D-4D0D-B675-500D6B438E1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF81BD68-F81D-4D0D-B675-500D6B438E1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB60D50A-E84D-43F8-A024-DDB481C7818C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB60D50A-E84D-43F8-A024-DDB481C7818C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB60D50A-E84D-43F8-A024-DDB481C7818C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB60D50A-E84D-43F8-A024-DDB481C7818C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F198C4DD-1197-4816-B56B-CF64ED711B00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F198C4DD-1197-4816-B56B-CF64ED711B00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F198C4DD-1197-4816-B56B-CF64ED711B00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F198C4DD-1197-4816-B56B-CF64ED711B00}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -161,6 +173,8 @@ Global
 		{2AABC438-F4C8-4639-B2A9-A7BE1EFB6D81} = {E690A1E2-63AA-4F0E-A405-D846B6A4FC00}
 		{94034D87-FBA6-4C71-AE9A-7839A4B6DC8D} = {E690A1E2-63AA-4F0E-A405-D846B6A4FC00}
 		{DF81BD68-F81D-4D0D-B675-500D6B438E1A} = {E690A1E2-63AA-4F0E-A405-D846B6A4FC00}
+		{DB60D50A-E84D-43F8-A024-DDB481C7818C} = {F6FE0816-826E-4D08-A9C4-B9D3BAD3A320}
+		{F198C4DD-1197-4816-B56B-CF64ED711B00} = {F6FE0816-826E-4D08-A9C4-B9D3BAD3A320}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1957D577-9027-43F5-8368-09B072CA57FC}

@@ -52,7 +52,6 @@ namespace Leopard.AspNetCore.Extensions
         /// 获取远程IP
         /// </summary>
         /// <returns>IP</returns>
-        [Obsolete("验证是否可行")]
         public static string GetRemoteIp(this HttpRequest request)
         {
             var ip = request.Headers["X-Forwarded-For"].FirstOrDefault();

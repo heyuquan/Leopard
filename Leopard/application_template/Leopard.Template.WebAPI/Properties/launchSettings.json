@@ -12,7 +12,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/config/geter",
+      "launchUrl": "api/httpclient",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
