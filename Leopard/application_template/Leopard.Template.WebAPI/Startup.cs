@@ -1,7 +1,9 @@
-﻿using Leopard.AspNetCore.Middleware;
+﻿using Leopard.AspNetCore.Autofac.Extensions;
+using Leopard.AspNetCore.Middleware;
 using Leopard.Configuration;
+using Leopard.Template.WebAPI.BackgroundServices;
 using Leopard.Template.WebAPI.Config;
-using Leopard.AspNetCore.Autofac.Extensions;
+using Leopard.Template.WebAPI.HttpClients;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -10,14 +12,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 using NLog.Web;
+using Polly;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 using System.IO;
-using System.Reflection;
-using Leopard.Template.WebAPI.HttpClients;
-using Polly;
 using System.Net.Http;
+using System.Reflection;
 
 namespace Leopard.Template.WebAPI
 {
@@ -38,6 +39,14 @@ namespace Leopard.Template.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            services.AddMemoryCache(options =>
+            {
+                // 缓存压缩比为 2%，每 5 分钟进行一次过期缓存的扫描，最大缓存空间大小限制为 1024
+                options.CompactionPercentage = 0.02d;
+                options.ExpirationScanFrequency = TimeSpan.FromMinutes(5);
+                //options.SizeLimit = 1024;
+            });
+
             services.AddIConfigurationGeter().AddConfigFinder();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
@@ -80,6 +89,16 @@ namespace Leopard.Template.WebAPI
                 // 将 URL 地址转换成小写  （设置后，swagger/html.index页面展现的api会全部是小写的）
                 options.LowercaseUrls = true;
             });
+            services.AddHostedService<TokenRefreshService>();
+
+            services.AddApiVersioning(option =>
+            {
+                option.ReportApiVersions = true;
+                option.AssumeDefaultVersionWhenUnspecified = true;
+                option.DefaultApiVersion = new ApiVersion(1, 0);
+            });
+
+            services.AddMemoryCache();
 
             return services.GetAutofacServiceProvider();
         }
