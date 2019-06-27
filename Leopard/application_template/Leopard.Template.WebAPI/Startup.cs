@@ -4,9 +4,12 @@ using Leopard.Configuration;
 using Leopard.Template.WebAPI.BackgroundServices;
 using Leopard.Template.WebAPI.Config;
 using Leopard.Template.WebAPI.HttpClients;
+using Leopard.Template.WebAPI.Utils;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -16,6 +19,7 @@ using Polly;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
+using System.Linq;
 using System.IO;
 using System.Net.Http;
 using System.Reflection;
@@ -48,7 +52,28 @@ namespace Leopard.Template.WebAPI
             });
 
             services.AddIConfigurationGeter().AddConfigFinder();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddResponseCompression(options=> {
+                options.Providers.Add<GzipCompressionProvider>();
+                options.MimeTypes =
+                    ResponseCompressionDefaults.MimeTypes.Concat(new[] { "image/svg+xml" });
+            });
+            services.AddResponseCaching();
+
+            services.AddMvc(options =>
+            {
+                options.CacheProfiles.Add("Default",
+                       new CacheProfile()
+                       {
+                           Duration = 60
+                       });
+                options.CacheProfiles.Add("Never",
+                    new CacheProfile()
+                    {
+                        Location = ResponseCacheLocation.None,
+                        NoStore = true
+
+                    });
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             if (Env.IsDevelopment())
             {
@@ -99,8 +124,36 @@ namespace Leopard.Template.WebAPI
             });
 
             services.AddMemoryCache();
+            this.ConfigureServices_DistributedRedisCache(services);
+            // this.ConfigureServices_DistributedSqlServerCache(services);
+
+            this.ConfigureServices_HttpClient(services);
 
             return services.GetAutofacServiceProvider();
+        }
+
+        private void ConfigureServices_DistributedRedisCache(IServiceCollection services)
+        {
+            services.AddDistributedRedisCache(options =>
+            {
+                options.InstanceName = "stu:";
+                options.Configuration = this.Configuration["RedisConnectionString"];
+            });
+        }
+
+        private void ConfigureServices_DistributedSqlServerCache(IServiceCollection services)
+        {
+            // 使用 options.SystemClock 配置了一个本地时钟, 缓存过期扫描时钟
+            // 接着设置缓存过期时间为 1 分钟，缓存过期后逐出时间为 5 分钟
+            services.AddDistributedSqlServerCache(options =>
+            {
+                options.SystemClock = new LocalSystemClock();
+                options.ConnectionString = this.Configuration["ConnectionString"];
+                options.SchemaName = "dbo";
+                options.TableName = "AspNetCoreCache";
+                options.DefaultSlidingExpiration = TimeSpan.FromMinutes(1);
+                options.ExpiredItemsDeletionInterval = TimeSpan.FromMinutes(5);
+            });
         }
 
         private void ConfigureServices_HttpClient(IServiceCollection services)
@@ -136,10 +189,27 @@ namespace Leopard.Template.WebAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            app.UseMiddleware<AdminSafeListMiddleware>(this.Configuration["AdminSafeList"]);
             app.UseErrorHandlingMiddleware();
+           
             // nlog            
             loggerFactory.AddNLog();
             env.ConfigureNLog("Nlog.config");
+
+            app.UseResponseCompression();
+            app.UseResponseCaching();
+            app.Use(async (context, next) =>
+            {
+                context.Response.GetTypedHeaders().CacheControl =
+                new Microsoft.Net.Http.Headers.CacheControlHeaderValue()
+                {
+                    Public = true,
+                    MaxAge = TimeSpan.FromSeconds(10)
+                };
+                context.Response.Headers[Microsoft.Net.Http.Headers.HeaderNames.Vary] = new string[] { "Accept-Encoding" };
+
+                await next();
+            });
 
             if (env.IsDevelopment())
             {

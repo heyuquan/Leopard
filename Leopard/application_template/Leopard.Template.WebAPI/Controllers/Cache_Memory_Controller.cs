@@ -10,13 +10,13 @@ using Microsoft.Extensions.Primitives;
 
 namespace Leopard.Template.WebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/memory-cache")]
     [ApiController]
-    public class MemoryCacheController : ControllerBase
+    public class Cache_Memory_Controller : ControllerBase
     {
         private IMemoryCache cache;
 
-        public MemoryCacheController(IMemoryCache cache)
+        public Cache_Memory_Controller(IMemoryCache cache)
         {
             this.cache = cache;
         }
