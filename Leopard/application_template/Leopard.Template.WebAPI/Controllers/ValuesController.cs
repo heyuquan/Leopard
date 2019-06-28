@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Leopard.Template.WebAPI.Utils;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.ObjectPool;
 
 namespace Leopard.Template.WebAPI.Controllers.v1
 {
@@ -24,7 +26,7 @@ namespace Leopard.Template.WebAPI.Controllers.v1
 namespace Leopard.Template.WebAPI.Controllers.v2
 {
     [ApiVersion("2.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
+    [Route("api/v{version:apiVersion}/values")]
     [ResponseCache(CacheProfileName = "Never")]
     [ApiController]
     public class ValuesController : ControllerBase
@@ -32,8 +34,16 @@ namespace Leopard.Template.WebAPI.Controllers.v2
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
-        {
-            return new string[] { "v2:value1", "v2:value2" };
+        {            
+            List<string> hashLst = new List<string>();
+            for (int i = 0; i <= 3; i++)
+            {
+                LocalSystemClock item = Startup.defaultPool.Get();
+                hashLst.Add(item.GetHashCode().ToString());
+                Startup.defaultPool.Return(item);
+            }
+
+            return hashLst;
         }
     }
 }

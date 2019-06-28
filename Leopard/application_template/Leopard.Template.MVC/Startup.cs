@@ -26,6 +26,21 @@ namespace Leopard.Template.MVC
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            // 方式一：禁用Cookie同意功能
+            //services.Configure<CookiePolicyOptions>(options =>
+            //{
+            //    // 禁用Cookie同意功能
+            //    options.CheckConsentNeeded = context => false;
+            //    options.MinimumSameSitePolicy = SameSiteMode.None;
+
+            //});
+            //services.AddSession();
+
+            // 方式二：标记会话Cookie是必要的
+            services.AddSession(opts =>
+            {
+                opts.Cookie.IsEssential = true;
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddRouting(options =>
@@ -50,6 +65,7 @@ namespace Leopard.Template.MVC
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
+            app.UseSession();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

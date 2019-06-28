@@ -23,22 +23,37 @@ using System.Linq;
 using System.IO;
 using System.Net.Http;
 using System.Reflection;
+using RedLockNet.SERedis;
+using System.Collections.Generic;
+using System.Net;
+using RedLockNet.SERedis.Configuration;
+using RedLockNet;
+using Microsoft.Extensions.ObjectPool;
 
 namespace Leopard.Template.WebAPI
 {
     public class Startup
     {
+        public IHostingEnvironment Env { get; }
+        public IConfiguration Configuration { get; }
+
+        private DefaultPooledObjectPolicy<LocalSystemClock> defaultPolicy = null;
+        public static DefaultObjectPool<LocalSystemClock> defaultPool = null;
+
+        private static string[] docs = new[] { "未分类", "Swagger组" };
+        private RedLockFactory lockFactory = null;
+
+
+
         public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             this.Env = env;
             this.Configuration = configuration;
             this.Configuration.AddConfigurationGeterLocator();
+
+            defaultPolicy = new DefaultPooledObjectPolicy<LocalSystemClock>();
+            defaultPool = new DefaultObjectPool<LocalSystemClock>(defaultPolicy, 2);
         }
-
-        public IHostingEnvironment Env { get; }
-        public IConfiguration Configuration { get; }
-
-        static string[] docs = new[] { "未分类", "Swagger组" };
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
@@ -52,7 +67,8 @@ namespace Leopard.Template.WebAPI
             });
 
             services.AddIConfigurationGeter().AddConfigFinder();
-            services.AddResponseCompression(options=> {
+            services.AddResponseCompression(options =>
+            {
                 options.Providers.Add<GzipCompressionProvider>();
                 options.MimeTypes =
                     ResponseCompressionDefaults.MimeTypes.Concat(new[] { "image/svg+xml" });
@@ -129,7 +145,28 @@ namespace Leopard.Template.WebAPI
 
             this.ConfigureServices_HttpClient(services);
 
+            this.lockFactory = this.GetRedLockFactory();
+            services.AddSingleton(typeof(IDistributedLockFactory), this.lockFactory);
+
             return services.GetAutofacServiceProvider();
+        }
+
+        private RedLockFactory GetRedLockFactory()
+        {
+            var redisUrl = this.Configuration["RedisUrl"];
+            if (string.IsNullOrEmpty(redisUrl))
+            {
+                throw new ArgumentException("RedisUrl 不能为空");
+            }
+            var urls = redisUrl.Split(";").ToList();
+            var endPoints = new List<RedLockEndPoint>();
+            foreach (var item in urls)
+            {
+                var arr = item.Split(":");
+                var otherParams = arr[1].Split(",");
+                endPoints.Add(new RedLockEndPoint(new DnsEndPoint(arr[0], Convert.ToInt32(otherParams[0]))) { Password = otherParams[1], RedisDatabase = 1 });
+            }
+            return RedLockFactory.Create(endPoints);
         }
 
         private void ConfigureServices_DistributedRedisCache(IServiceCollection services)
@@ -187,11 +224,11 @@ namespace Leopard.Template.WebAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IApplicationLifetime lifetime)
         {
             app.UseMiddleware<AdminSafeListMiddleware>(this.Configuration["AdminSafeList"]);
             app.UseErrorHandlingMiddleware();
-           
+
             // nlog            
             loggerFactory.AddNLog();
             env.ConfigureNLog("Nlog.config");
@@ -223,6 +260,11 @@ namespace Leopard.Template.WebAPI
                             options.SwaggerEndpoint($"/swagger/{item}/swagger.json", item);
                     });
             }
+
+            lifetime.ApplicationStopping.Register(() =>
+            {
+                this.lockFactory.Dispose();
+            });
 
             app.UseMvc();
         }

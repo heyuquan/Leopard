@@ -1,6 +1,12 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Http
+@{
     ViewData["Title"] = "Privacy Policy";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<div class="text-center">
+    @Context.Session.GetString("actions")
+</div>
+<div class="text-center">
+    <h1>@ViewData["Title"]</h1>
+    <p>Use this page to detail your site's privacy policy.</p>
+</div>
