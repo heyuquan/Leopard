@@ -26,6 +26,9 @@ namespace Leopard.Template.MVC
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            // 设置 IDistributedCache 后，AddSession也会存储在 redis 里面
+            this.ConfigureServices_DistributedRedisCache(services);
+            
             // 方式一：禁用Cookie同意功能
             //services.Configure<CookiePolicyOptions>(options =>
             //{
@@ -47,6 +50,22 @@ namespace Leopard.Template.MVC
             {
                 // 将 URL 地址转换成小写  （设置后，swagger/html.index页面展现的api会全部是小写的）
                 options.LowercaseUrls = true;
+            });
+
+            services.AddHttpContextAccessor();
+
+            // Cookie 封装组件，支持加密
+            services.AddCookieManager(options=> {
+                options.AllowEncryption = false;
+            });
+        }
+
+        private void ConfigureServices_DistributedRedisCache(IServiceCollection services)
+        {
+            services.AddDistributedRedisCache(options =>
+            {
+                options.InstanceName = "mvc:";
+                options.Configuration = this.Configuration["RedisConnectionString"];
             });
         }
 
