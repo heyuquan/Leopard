@@ -246,7 +246,7 @@ namespace Leopard.Template.WebAPI
                 context.Response.Headers[Microsoft.Net.Http.Headers.HeaderNames.Vary] = new string[] { "Accept-Encoding" };
 
                 await next();
-            });
+            });           
 
             if (env.IsDevelopment())
             {

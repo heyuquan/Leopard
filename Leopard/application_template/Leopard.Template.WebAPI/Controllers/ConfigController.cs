@@ -6,6 +6,7 @@ using Leopard.Template.WebAPI.Config;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Http;
 
 namespace Leopard.Template.WebAPI.Controllers
 {

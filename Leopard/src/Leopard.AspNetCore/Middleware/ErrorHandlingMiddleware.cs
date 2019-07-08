@@ -1,6 +1,7 @@
 ﻿using Leopard.AspNetCore.Extensions;
 using Leopard.Domain.Request;
 using Leopard.Extensions;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -77,6 +78,17 @@ namespace Leopard.AspNetCore.Middleware
                     }
                     break;
             }
+
+            var exceptionHandlerPathFeature =
+                context.Features.Get<IExceptionHandlerPathFeature>();
+            var exceptionHandlerFeature =
+                context.Features.Get<IExceptionHandlerFeature>();
+
+            // 根据异常类型做处理
+            //if (exceptionHandlerPathFeature?.Error is FileNotFoundException)
+            //{
+            //    await context.Response.WriteAsync("File error thrown!<br><br>\r\n");
+            //}
 
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat($"url:{context.Request.GetAbsoluteUri()}  statusCode:{statusCode.ToString()}-{info}")
