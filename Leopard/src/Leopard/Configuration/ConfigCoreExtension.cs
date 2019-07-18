@@ -15,6 +15,9 @@ namespace Leopard.Configuration
             return services;
         }
 
+        /// <summary>
+        /// 注入 IConfigDependency 配置文件
+        /// </summary>
         public static IServiceCollection AddConfigFinder(this IServiceCollection services)
         {
             var types = AppDomain.CurrentDomain.GetAssemblies()
