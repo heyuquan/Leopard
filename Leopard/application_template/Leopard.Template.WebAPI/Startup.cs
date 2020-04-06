@@ -123,6 +123,7 @@ namespace Leopard.Template.WebAPI
                 });
             }
 
+            // 选项模式
             services.Configure<MySetting>(this.Configuration.GetSection("MySetting"));
 
             services.AddRouting(options =>
