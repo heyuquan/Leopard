@@ -21,6 +21,7 @@ namespace Leopard.Demo.WebAPI
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .UseUrls("http://localhost:60000", "http://localhost:60001")
                 .ConfigureLogging((context,logger)=> {
                     logger.AddFilter("System", LogLevel.Warning);
                     logger.AddFilter("Microsoft", LogLevel.Warning);
